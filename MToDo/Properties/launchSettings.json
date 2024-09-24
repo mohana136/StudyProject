@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "MToDo": {
+      "commandName": "Project",
+      "commandLineArgs": "getall"
+    }
+  }
+}
