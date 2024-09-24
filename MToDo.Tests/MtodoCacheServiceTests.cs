@@ -15,16 +15,17 @@ public class MtodoCacheServiceTests
 {
     private readonly IServiceProvider _serviceProvider;
     private readonly MtodoCacheService _mtodoCacheService;
-    private readonly ICommandService _todoApiClient;
+    private readonly ITodoRepository<Mtodo> _todoRepository;
+    //private readonly ICommandService _todoApiClient;
 
     public MtodoCacheServiceTests()
     {
         // Fake the ITodoApiClient instance
-        _todoApiClient = A.Fake<ICommandService>();
+        _todoRepository = A.Fake<ITodoRepository<Mtodo>>();
 
         // Configure a real ServiceProvider with the ITodoApiClient added as a singleton
         var serviceCollection = new ServiceCollection();
-        serviceCollection.AddSingleton(_todoApiClient);
+        serviceCollection.AddSingleton(_todoRepository);
         _serviceProvider = serviceCollection.BuildServiceProvider();
 
         // Mock TodoConfig with a time interval
@@ -45,19 +46,14 @@ public class MtodoCacheServiceTests
         };
 
         // Fake the behavior of GetToDo to return the list of overdue items
-        A.CallTo(() => _todoApiClient.GetToDo())
+        A.CallTo(() => _todoRepository.GetAll())
             .Returns(todoList);
 
         // Act: Execute the DoWork method
-        _mtodoCacheService.DoWork();
-
-        // Assert: Check that OverDue is set to true for overdue tasks
-        //foreach (var todo in todoList)
-        //{
-        //    Assert.True(todo.OverDue);
-        //    A.CallTo(() => _todoApiClient.UpdateToDo(A<Mtodo>.That.Matches(t =>  t.OverDue))).MustHaveHappened();
-        //}
+        _mtodoCacheService.DoWork();  
+        
     }
+
     [Fact]
     public async Task StartAsync_ShouldStartTimer_AndLogMessage()
     {

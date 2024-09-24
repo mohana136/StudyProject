@@ -12,8 +12,10 @@ namespace MToDo.Handlers.Queries.GetById.GetByIdHandler
 {
     public class CreateCommandHandler
     {
+        // Command definition for creating a new Todo item
         public record CreateUserDetailsCommand(string Title, string State, DateTime DueDate, Boolean OverDue) : IRequest<Mtodo>;
 
+        // Command handler implementation for creating a new Todo item
         public class CreateDetailsCommandHandler : IRequestHandler<CreateUserDetailsCommand, Mtodo>
         {
             private readonly ITodoRepository<Mtodo> _todoRepository;
@@ -26,12 +28,10 @@ namespace MToDo.Handlers.Queries.GetById.GetByIdHandler
             {
                 try
                 {
-                    if (request is not null)
-                    {
-                        var id = Guid.NewGuid();
+                    if (request != null)
+                    {                        
                         var newtodo =  await _todoRepository.Add(new Mtodo
-                        {
-                            //ID = id,
+                        {                            
                             Title = request.Title,
                             State = request.State,
                             DueDate = request.DueDate,
