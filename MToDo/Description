@@ -1,0 +1,134 @@
+Key areas of development process to cover 
+
+C# 
+
+Linq   -IoC / DI - lifestyles 
+
+Unit testing 
+
+Folder structure – Behaviour Driven 
+
+Inheritance vs Composition 
+
+IHostedService / Background workers 
+
+Async 
+
+Config 
+
+Database 
+
+MediatR nuget package. 
+
+ 
+
+Project 
+
+Create a todo list application. 
+
+ 
+
+Console app with command line arguments (called mtodo) 
+
+CRUD ops on task  
+
+mtodo add “this is a task” <duedate>    //"add \"thisistask \" \"2024-09-23 15:25:34.6596821 \"" 
+
+Logs out to the console the new task ID 
+
+mtodo delete 123 
+
+mtodo update 123 “updated task” <duedate>    
+
+mtodo done 123 
+
+mtodo get 123 
+
+mtodo list 
+
+All outputs to console window. 
+
+Data Model 
+
+ 
+
+ID 
+
+Todo Task id 
+
+mTitle 
+
+The description of the work 
+
+State 
+
+Active/Done 
+
+DueDate 
+
+Date todo item should be completed 
+
+Overdue 
+
+Boolean - True if the duedate passed 
+
+ 
+
+ 
+
+ 
+
+Hosted Service 
+
+IHostedService – TaskDateChecker 
+
+Run a timer that does this every 5 minutes (use configuration to hold interval period) 
+
+Read the database, update the overdue flag on any rows where the duedate is in the past. 
+
+Database – use the local SQL server to host the table. Code first approach. Use EF Core. 
+
+ 
+
+Handling commands: 
+convert the parameters provided into a request object and send to mediator. 
+
+Example of mediator can be found in cxp.directory service 
+
+GitHub - jbogard/MediatR: Simple, unambitious mediator implementation in .NET 
+
+Patterns 
+
+Use the following patterns when building the app 
+
+Mediatorlo 
+
+Repository 
+
+Unit Tests 
+
+Behaviour driven – think about the features 
+
+ 
+
+ 
+
+"commandLineArgs": "add \"thisistask \" \"2024-09-23 15:25:34.6596821 \"" 
+
+  
+
+"commandLineArgs": "update \"56 \" \"updated task Test7\" \"2024-09-23 15:25:34.6596821 \"" 
+
+ 
+
+"commandLineArgs": "delete \"11 \" " 
+
+ 
+
+"commandLineArgs": "get \"15 \" " 
+
+ 
+
+"commandLineArgs": "getall" 
+
+ 
